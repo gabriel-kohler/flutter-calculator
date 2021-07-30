@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calculator/models/logic.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Button extends StatelessWidget {
@@ -10,15 +9,12 @@ class Button extends StatelessWidget {
   final String text;
   final bool buttonWithDoubleSpace;
   final Color color;
-  final void Function(String, Operation) callback;
-
-  final Operation operation;
+  final void Function(String) callback;
 
   const Button({
     Key? key,
     required this.text,
     required this.callback,
-    this.operation = Operation.Result,
     this.buttonWithDoubleSpace = false,
     this.color = DEFAULT,
   }) : super(key: key);
@@ -27,7 +23,6 @@ class Button extends StatelessWidget {
     Key? key,
     required this.text,
     required this.callback,
-    this.operation = Operation.Result,
     this.buttonWithDoubleSpace = true,
     this.color = DEFAULT,
   }) : super(key: key);
@@ -36,7 +31,6 @@ class Button extends StatelessWidget {
     Key? key,
     required this.text,
     required this.callback,
-    required this.operation,
     this.buttonWithDoubleSpace = false,
     this.color = OPERATION,
   }) : super(key: key);
@@ -46,7 +40,7 @@ class Button extends StatelessWidget {
     return Expanded(
       flex: buttonWithDoubleSpace ? 2 : 1,
       child: ElevatedButton(
-        onPressed: () => callback(text, operation),
+        onPressed: () => callback(text),
         child: Text(
           text,
           style: color == OPERATION

@@ -10,11 +10,10 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   final Logic logic = Logic();
-  String result = '0';
 
-  _onPressed(String text, Operation op) {
+  _onPressed(String text) {
     setState(() {
-      result = logic.applyCalculator(text, op);
+      logic.applyCommand(text);
     });
   }
 
@@ -23,7 +22,7 @@ class _CalculatorState extends State<Calculator> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Display(result),
+          Display(logic.value),
           Keyboard(_onPressed),
         ],
       ),
