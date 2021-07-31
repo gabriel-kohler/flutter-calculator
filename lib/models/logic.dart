@@ -6,6 +6,7 @@ class Logic {
   String _value = '0';
   bool _wipeValue = false;
   String? _operation;
+  String _lastCommand = '';
 
   _setOperation(String newOperation) {
     bool isResultOperation = newOperation == '=';
@@ -23,8 +24,9 @@ class Logic {
 
       _operation = isResultOperation ? null : newOperation;
       _bufferIndex = isResultOperation ? 0 : 1;
-      _wipeValue = !isResultOperation;
     }
+
+    _wipeValue = true; //_wipeValue = !isResultOperation;
   }
 
   void _addDigit(String digit) {
@@ -44,6 +46,10 @@ class Logic {
   }
 
   void applyCommand(String command) {
+    if (_isReplacingOperation(command)) {
+      _operation = command;
+      return;
+    }
     if (command == 'AC') {
       _allClear();
     } else if (operations.contains(command)) {
@@ -51,6 +57,14 @@ class Logic {
     } else {
       _addDigit(command);
     }
+    _lastCommand = command;
+  }
+
+  _isReplacingOperation(String command) {
+    return operations.contains(_lastCommand) &&
+        operations.contains(command) &&
+        _lastCommand != '=' &&
+        command != '=';
   }
 
   void _allClear() {
