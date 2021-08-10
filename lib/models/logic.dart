@@ -1,5 +1,5 @@
 class Logic {
-  static const operations = const ['%', '/', 'x', '-', '+', '='];
+  static const _operations = const ['%', '/', 'x', '-', '+', '='];
 
   final _buffer = [0.0, 0.0];
   int _bufferIndex = 0;
@@ -52,7 +52,7 @@ class Logic {
     }
     if (command == 'AC') {
       _allClear();
-    } else if (operations.contains(command)) {
+    } else if (_operations.contains(command)) {
       _setOperation(command);
     } else {
       _addDigit(command);
@@ -61,8 +61,8 @@ class Logic {
   }
 
   _isReplacingOperation(String command) {
-    return operations.contains(_lastCommand) &&
-        operations.contains(command) &&
+    return _operations.contains(_lastCommand) &&
+        _operations.contains(command) &&
         _lastCommand != '=' &&
         command != '=';
   }
